@@ -127,6 +127,16 @@ use forksafe::ForksafeTempfile;
 pub mod handle;
 use crate::handle::{Closed, Writable};
 
+#[cfg(target_os = "wasi")]
+fn process_id() -> u32 {
+    0
+}
+
+#[cfg(not(target_os = "wasi"))]
+fn process_id() -> u32 {
+    std::process::id()
+}
+
 ///
 pub mod registry;
 

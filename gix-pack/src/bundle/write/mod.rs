@@ -367,11 +367,13 @@ impl crate::Bundle {
     }
 }
 
+#[cfg(not(target_os = "wasi"))]
 fn resolve_entry(range: data::EntryRange, mapped_file: &memmap2::Mmap) -> Option<&[u8]> {
     mapped_file.get(range.start as usize..range.end as usize)
 }
 
 #[allow(clippy::type_complexity)] // cannot typedef impl Fn
+#[cfg(not(target_os = "wasi"))]
 fn new_pack_file_resolver(
     data_file: SharedTempFile,
 ) -> io::Result<(
@@ -382,6 +384,25 @@ fn new_pack_file_resolver(
     guard.flush()?;
     let mapped_file = crate::mmap::read_only(&guard.get_mut().with_mut(|f| f.path().to_owned())?)?;
     Ok((resolve_entry, mapped_file))
+}
+
+#[cfg(target_os = "wasi")]
+fn resolve_entry_from_bytes(range: data::EntryRange, pack: &Vec<u8>) -> Option<&[u8]> {
+    pack.get(range.start as usize..range.end as usize)
+}
+
+#[allow(clippy::type_complexity)] // cannot typedef impl Fn
+#[cfg(target_os = "wasi")]
+fn new_pack_file_resolver(
+    data_file: SharedTempFile,
+) -> io::Result<(
+    impl Fn(data::EntryRange, &Vec<u8>) -> Option<&[u8]> + Send + Clone,
+    Vec<u8>,
+)> {
+    let mut guard = data_file.lock();
+    guard.flush()?;
+    let pack = std::fs::read(guard.get_mut().with_mut(|file| file.path().to_owned())?)?;
+    Ok((resolve_entry_from_bytes, pack))
 }
 
 struct WriteOutcome {
