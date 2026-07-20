@@ -56,7 +56,7 @@ gix-hashtable = { version = "^0.15.2", path = "../gix-hashtable", optional = tru
 gix-traverse = { version = "^0.59.0", path = "../gix-traverse", optional = true }
 gix-diff = { version = "^0.65.0", path = "../gix-diff", default-features = false, optional = true }
 
-memmap2 = "0.9.11"
+memmap2 = { git = "https://github.com/enbop/memmap2-rs.git", rev = "7163e105159cb9e95d952e42d390e36ccd83e5c1" }
 smallvec = "1.15.1"
 parking_lot = { version = "0.12.4", default-features = false, optional = true }
 thiserror = "2.0.18"

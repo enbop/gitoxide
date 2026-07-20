@@ -29,7 +29,7 @@ gix-chunk = { version = "^0.7.2", path = "../gix-chunk" }
 gix-error = { version = "^0.2.5", path = "../gix-error" }
 
 bstr = { version = "1.12.0", default-features = false, features = ["std"] }
-memmap2 = "0.9.11"
+memmap2 = { git = "https://github.com/enbop/memmap2-rs.git", rev = "7163e105159cb9e95d952e42d390e36ccd83e5c1" }
 nonempty = "0.12.0"
 serde = { version = "1.0.114", optional = true, default-features = false, features = ["derive"] }
 

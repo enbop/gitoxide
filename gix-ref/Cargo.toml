@@ -40,10 +40,10 @@ gix-tempfile = { version = "^23.0.0", default-features = false, path = "../gix-t
 thiserror = "2.0.18"
 serde = { version = "1.0.114", optional = true, default-features = false, features = ["derive"] }
 
-# packed refs
-memmap2 = "0.9.11"
-
 document-features = { version = "0.2.1", optional = true }
+
+# packed refs
+memmap2 = { git = "https://github.com/enbop/memmap2-rs.git", rev = "7163e105159cb9e95d952e42d390e36ccd83e5c1" }
 
 [dev-dependencies]
 gix-testtools = { path = "../tests/tools", default-features = false }

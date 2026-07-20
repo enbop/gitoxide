@@ -48,7 +48,7 @@ gix-utils = { version = "^0.3.4", path = "../gix-utils" }
 hashbrown = "0.17.1"
 fnv = "1.0.7"
 thiserror = "2.0.18"
-memmap2 = "0.9.11"
+memmap2 = { git = "https://github.com/enbop/memmap2-rs.git", rev = "7163e105159cb9e95d952e42d390e36ccd83e5c1" }
 filetime = "0.2.29"
 bstr = { version = "1.12.0", default-features = false }
 
